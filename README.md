@@ -17,7 +17,7 @@ pip3 install -r requirements.txt
 - Will make use of Panda to do some data manipulation and analysis
 - Need to source for data from more websites, 
 e.g.<br/> 
-https://nvd.nist.gov/vuln/detail/CVE-xxxx-xxxx
+https://nvd.nist.gov/vuln/detail/CVE-xxxx-xxxx <br/>
 https://rapid7.com/db/vulnerabilities/xxxxxxxxx
 
 
