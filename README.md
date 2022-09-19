@@ -15,8 +15,8 @@ pip3 install -r requirements.txt
 ## Pending
 - Will add more columns to the csv file with more data obtained regarding each CVE
 - Will make use of Panda to do some data manipulation and analysis
-- Need to source for data from more websites, 
 - Will go through the code and change some of the variable names and add some stuff from time to time
+- Need to source for data from more websites, 
 e.g.<br/> 
 https://nvd.nist.gov/vuln/detail/CVE-xxxx-xxxx <br/>
 https://rapid7.com/db/vulnerabilities/xxxxxxxxx
