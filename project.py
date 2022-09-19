@@ -97,7 +97,7 @@ def main():
                 date = exploitDB(searchString,url)[3]
                 csvOutput(csvName,cve,author,title,date,url)
             else:
-                print('script not executed')
+                print('Exploit-db.com not found in the url')
 
 if __name__ == "__main__":
     main()
