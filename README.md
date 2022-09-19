@@ -4,6 +4,8 @@ This script requires you to feed it with the full path to a txt file with the cv
 
 It will perform a google search based on each CVE number in the file and will create a CSV file with details such as CVE Number, Author, Title, Date Published and a link to the webpage to find out more details
 
+Also, it will tell you which vulnerability is the most popular based on the number of google search results for each CVE number
+
 ## Requirements
 Tested and working with Python 3.9
 
