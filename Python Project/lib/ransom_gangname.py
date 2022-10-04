@@ -65,7 +65,7 @@ def search_Ransomware_gang(group_nameList):
                 ransomware_search_results = requests.get(results, headers=headers)
                 response = ransomware_search_results.content
                 soup = BeautifulSoup(response,'lxml')
-                find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{4}",str(soup))
+                find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{5}",str(soup))
                 for numbers in find_cve_numbers:
                     if numbers.upper() not in cve_number_list and numbers.upper != None:
                         cve_number_list.append(numbers.upper())
