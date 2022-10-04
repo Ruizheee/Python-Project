@@ -1,27 +1,9 @@
 ## About
-This script requires you to feed it with the full path to a txt file with the cve numbers in it, in the following format
-![Alt Text](format.JPG)
+This Script extracts Ransomware Gang Names from https://www.ransom-db.com/ransomware-groups. For each of the Ransomware Gang Names, it will perform a Google Search, making use of Google Dorking. It will search if the Ransomware Gang name and the strings "CVE" and "Ransomware" (E.g. intitle:"Ransomware" "CVE" "Lockbit", Lockbit being the name of the Ransomware Group.) Next, for each search result, it will attempt to extract the CVE numbers. After extracting them, each CVE number will be searched through in different database websites, e.g. https://nvd.nist.gov and will attempt to scrape details regarding the CVE number, which output will then be stored in a CSV File that is up to the user to name. 
 
-It will perform a google search based on each CVE number in the file and will create a CSV file with details such as CVE Number, Author, Title, Date Published and a link to the webpage to find out more details
+Pending:
+Apart from that, this script should be able to tell which CVE is most exploited by Ransomware Gangs 
 
-Also, it will tell you which vulnerability is the most popular based on the number of google search results for each CVE number
-
-## Requirements
-Tested and working with Python 3.9
-
-```
-git clone https://github.com/Transcendence-hay-hay/Python-Project.git
-pip3 install -r requirements.txt
-```
-
-## Pending
-- Will add more columns to the csv file with more data obtained regarding each CVE
-- Will make use of Panda to do some data manipulation and analysis
-- Will go through the code and change some of the variable names and add some stuff from time to time
-- Need to source for data from more websites, 
-e.g.<br/> 
-https://nvd.nist.gov/vuln/detail/CVE-xxxx-xxxx <br/>
-https://rapid7.com/db/vulnerabilities/xxxxxxxxx
 
 
 
