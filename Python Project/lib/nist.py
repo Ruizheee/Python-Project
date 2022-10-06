@@ -17,8 +17,6 @@ def queryNist(cveNumber):
     try:
         sleep(5)
         searchResults = requests.get(cveSearch, headers=headers)
-        if searchResults.status_code == 429:
-            sleep(int(searchResults.headers["Retry-After"]))
         response = searchResults.content
         soup = BeautifulSoup(response,'lxml')
         #Get the CVSS Score
