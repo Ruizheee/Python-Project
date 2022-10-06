@@ -29,25 +29,28 @@ def cpeBreakDown(cpeStringList):
         except:
             continue
         cpeString = cpeString.split(':') #Each column of the CPE String that is delimited by the ':' provides information
-        part = cpeString[2] #This column determines what type of platform is this exploit about
-        if part == 'a':
-            part = 'Application'
-        elif part == 'o':
-            part = 'Operating System'
-        elif part == 'h':
-            part = 'Hardware Devices'
-        vendor = cpeString[3] #Vendor of the product that is affected
-        product = cpeString[4] #Product that is affected
-        #Version number of the product that is affected, 
-        #Sometimes, it will be written in the "Up to (Including) or (Excluding) x.xx Version Number String"
-        version = cpeString[5]
-        upToVersionNumber = upToVersionList[number]
-        detailsList = [part,vendor,product]
-        #Check if the "Up to (Including) or (Excluding) x.xx Version Number String" exists
-        if upToVersionNumber: 
-            detailsList.append(upToVersionNumber)
-        else: 
-            detailsList.append(version)
-        information_List.append(detailsList)
+        try:
+            part = cpeString[2] #This column determines what type of platform is this exploit about
+            if part == 'a':
+                part = 'Application'
+            elif part == 'o':
+                part = 'Operating System'
+            elif part == 'h':
+                part = 'Hardware Devices'
+            vendor = cpeString[3] #Vendor of the product that is affected
+            product = cpeString[4] #Product that is affected
+            #Version number of the product that is affected, 
+            #Sometimes, it will be written in the "Up to (Including) or (Excluding) x.xx Version Number String"
+            version = cpeString[5]
+            upToVersionNumber = upToVersionList[number]
+            detailsList = [part,vendor,product]
+            #Check if the "Up to (Including) or (Excluding) x.xx Version Number String" exists
+            if upToVersionNumber: 
+                detailsList.append(upToVersionNumber)
+            else: 
+                detailsList.append(version)
+            information_List.append(detailsList)
+        except:
+            pass
     return information_List
 

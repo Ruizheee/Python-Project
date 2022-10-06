@@ -1,12 +1,13 @@
 import csv, os
 def write_tofile(detailsList,csvName):
-    header = ["Group Name","CVE","Severity","Description","Attack Vector","Attack Complexity","Privileges Required","User Interaction","Confidentiality","Integrity","Availability","CPE String"]
+    header = ["Group Name","CVE","CVSS Version","Severity","Description","Attack Vector","Attack Complexity","Privileges Required","User Interaction","Confidentiality","Integrity","Availability","CPE String"]
     dataList = []
     try:
         for i in range(len(detailsList)):
             dataList.append(detailsList[i])
         separator = ','
-        headerCheck = separator.join(header)    
+        headerCheck = separator.join(header)
+        #try:    
         if not csvName.endswith('.csv'):
             csvName = csvName + '.csv'
         if not os.path.exists(csvName):

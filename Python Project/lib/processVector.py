@@ -47,7 +47,6 @@ def vectorBreakDown(vector_string):
     }
     for key2,value2 in attackVector_to_replace.items():
         attackVector = attackVector.replace(key2,value2)
-    print(attackVector)
     for key,value in rest_ofCharacters_to_replace.items():
         attackComplexity = attackComplexity.replace(key,value)
         privilegesRequired = privilegesRequired.replace(key,value)

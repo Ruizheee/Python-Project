@@ -23,7 +23,6 @@ def scrape_URL(searchKeywords, pages):
     table = resSoup.find('table',attrs={'class':'AaVjTc'})
     if pages > 1:
         for page in range(1,int(pages)+1):
-            print(page)
             pageNumber = 'Page {}'.format(page)
             tableData = table.find_all(attrs={'aria-label':pageNumber})
             nextLink = re.findall('href=\"\/search\S+',str(tableData))

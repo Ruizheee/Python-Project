@@ -50,7 +50,7 @@ def search_Ransomware_gang(group_nameList):
     '''
     headers = {"User_Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"}
     cve_keyvalueDict = dict()
-    sites_to_ignore = ['facebook','reddit','twitter','instagram','youtube','ctf','wilsonsmedia','cert.lv','translate']
+    sites_to_ignore = ['akamai','facebook','reddit','twitter','instagram','youtube','ctf','wilsonsmedia','cert.lv','translate']
     for groupname in group_nameList:
         cve_number_list = []
         ransomwareSearchString = 'intitle:"{name}" "ransomware" "cve-" after:2015'.format(name=groupname) 
@@ -59,13 +59,12 @@ def search_Ransomware_gang(group_nameList):
                 if sites in results:
                     results = ''
             try:
-                time.sleep(5)
                 print(groupname)
                 print(results)
                 ransomware_search_results = requests.get(results, headers=headers)
                 response = ransomware_search_results.content
                 soup = BeautifulSoup(response,'lxml')
-                find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{4}",str(soup))
+                find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{4,5}",str(soup))
                 for numbers in find_cve_numbers:
                     if numbers.upper() not in cve_number_list and numbers.upper != None:
                         cve_number_list.append(numbers.upper())

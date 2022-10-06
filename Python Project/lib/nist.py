@@ -41,8 +41,9 @@ def queryNist(cveNumber):
         for index in range(len(searchSoftwareConfiguration)):
             searchSoftwareConfiguration[index] = searchSoftwareConfiguration[index].replace('</pre>','')
         #Appends all the data into a list 
-        detailsList = [cveNumber.upper(),cvssScore,getDescription]
-        for number in range(len(vector)):
+        cvssVersion = vector[0]
+        detailsList = [cveNumber.upper(),cvssVersion,cvssScore,getDescription]
+        for number in range(1,len(vector)):
             detailsList.append(vector[number])
         #Appending the CPE String into the list
         detailsList.append(processCPE.cpeBreakDown(searchSoftwareConfiguration))
@@ -50,3 +51,4 @@ def queryNist(cveNumber):
     except:
         message = "No such CVE Record for " + cveNumber.upper()
         print(message)
+
