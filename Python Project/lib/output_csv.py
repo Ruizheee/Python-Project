@@ -6,8 +6,7 @@ def write_tofile(detailsList,csvName):
         for i in range(len(detailsList)):
             dataList.append(detailsList[i])
         separator = ','
-        headerCheck = separator.join(header)
-        #try:    
+        headerCheck = separator.join(header)    
         if not csvName.endswith('.csv'):
             csvName = csvName + '.csv'
         if not os.path.exists(csvName):
@@ -25,6 +24,3 @@ def write_tofile(detailsList,csvName):
         fileWrite.close()
     except:
         pass
-        
-    #except:
-    #    sys.exit('There is something wrong with the output...')
