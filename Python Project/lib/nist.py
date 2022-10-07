@@ -21,7 +21,7 @@ def queryNist(cveNumber):
         soup = BeautifulSoup(response,'lxml')
         #Get the CVSS Score
         getCVSS = soup.find_all("div",{"class":"col-lg-3 col-sm-6"})
-        cvssScore = re.findall("(\d\.\d\s)\w+",str(getCVSS))[0]
+        cvssScore = re.findall("(\d{1,2}\.\d\s)\w+",str(getCVSS))[0]
         #Get the Description
         getDescriptionClass = soup.find("div",{"class":"col-lg-9 col-md-7 col-sm-12"})
         getDescription = getDescriptionClass.find_all("p",{"data-testid":"vuln-description"})
