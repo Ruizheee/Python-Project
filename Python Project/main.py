@@ -2,6 +2,7 @@ import lib.fileInput as fi
 import lib.nist as nist_func
 import lib.output_csv as out_csv
 import lib.ransom_gangname as ransom
+import lib.popularCVE as popular
 
 def main():
     """
@@ -20,7 +21,10 @@ def main():
                 out_csv.write_tofile(detailsList,csvName)
             else:
                 pass
-    print('Job completed')
+    popular.count_PopularCve(f'{csvName}.csv')
+    popular.count_YearlyCve(f'{csvName}.csv')
+    popular.yearly_mostActiveGroup(f'{csvName}.csv')
+    print('Script completed')
 
 if __name__ == "__main__":
     main()

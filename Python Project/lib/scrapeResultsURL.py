@@ -8,8 +8,7 @@ def scrape_URL(searchKeywords, pages):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36'
     }
     base = "https://www.google.com.sg"
-    link = "https://www.google.com.sg/search?q="
-    fullLink = link + searchKeywords
+    fullLink = f"https://www.google.com/search?q=intitle%3A%22{searchKeywords}%22+%22ransomware%22+%22cve-%22&lr=lang_en&safe=images&biw=1920&bih=813&tbs=lr%3Alang_1en"
     res = requests.get(fullLink, headers=headers)
     resSoup = BeautifulSoup(res.text,"lxml")
     findlinks = resSoup.findAll("div",{"class":"yuRUbf"})
@@ -23,6 +22,7 @@ def scrape_URL(searchKeywords, pages):
     table = resSoup.find('table',attrs={'class':'AaVjTc'})
     if pages > 1:
         for page in range(1,int(pages)+1):
+            time.sleep(5)
             pageNumber = 'Page {}'.format(page)
             tableData = table.find_all(attrs={'aria-label':pageNumber})
             nextLink = re.findall('href=\"\/search\S+',str(tableData))
@@ -32,8 +32,9 @@ def scrape_URL(searchKeywords, pages):
                         nextLink[index] = nextLink[index].replace(words,'')
                         nextFullLink = base + nextLink[index]
                 nextPageList.append(nextFullLink)
+                print(nextPageList)
         for nextURLs in nextPageList:
-            time.sleep(3)
+            time.sleep(10)
             nextReq = requests.get(nextURLs, headers=headers)
             nextSoup = BeautifulSoup(nextReq.text,'lxml')
             find_nextLinks = nextSoup.findAll("div",{"class":"yuRUbf"})
@@ -46,4 +47,3 @@ def scrape_URL(searchKeywords, pages):
         return urlList
     else:
         return urlList
-

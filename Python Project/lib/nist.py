@@ -40,13 +40,30 @@ def queryNist(cveNumber):
         #Cleaning the CPE String
         for index in range(len(searchSoftwareConfiguration)):
             searchSoftwareConfiguration[index] = searchSoftwareConfiguration[index].replace('</pre>','')
+        # Get the solutions table
+        solutions_table = soup.find('table', attrs={'data-testid':"vuln-hyperlinks-table"})
+        # Get all hyperlinks in solution
+        solutions_links = re.findall('(?<=target="_blank">)(.*)(?=</a></td>)', str(solutions_table))
+        # Get the CWE table
+        CWE_table = soup.find('table', attrs={'data-testid': "vuln-CWEs-table"})
+        # Get the CWE-IDs
+        CWE_IDs = re.findall('CWE\-\S+', str(CWE_table))[1:]
+        # Clean CWE IDs (remove html tags)
+        CWE_IDs = [s.replace("</a>", "").replace("</span>", "") for s in CWE_IDs]
+        # Get the CWE names
+        CWE_Names = re.findall('(?<=vuln-CWEs-link-)(.*)(?=</td>)', str(CWE_table))
+        # Clean CWE names(remove first three unwanted chars)
+        CWE_Names = [char[3:] for char in CWE_Names]
+        # Put CWE IDs and names together in dictionary
+        CWE_Dict = {k: v for k, v in zip(CWE_IDs, CWE_Names)}
         #Appends all the data into a list 
         cvssVersion = vector[0]
-        detailsList = [cveNumber.upper(),cvssVersion,cvssScore,getDescription]
+        detailsList = [cveNumber.upper(),cvssVersion,cvssScore,getDescription,CWE_Dict]
         for number in range(1,len(vector)):
             detailsList.append(vector[number])
         #Appending the CPE String into the list
         detailsList.append(processCPE.cpeBreakDown(searchSoftwareConfiguration))
+        detailsList.append(solutions_links)
         return detailsList
     except:
         message = "No such CVE Record for " + cveNumber.upper()

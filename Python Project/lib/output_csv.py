@@ -1,6 +1,6 @@
 import csv, os
 def write_tofile(detailsList,csvName):
-    header = ["Group Name","CVE","CVSS Version","Severity","Description","Attack Vector","Attack Complexity","Privileges Required","User Interaction","Confidentiality","Integrity","Availability","CPE String"]
+    header = ["Group Name","CVE","CVSS Version","Severity","Description","Weakness Enumeration","Attack Vector","Attack Complexity","Privileges Required","User Interaction","Confidentiality","Integrity","Availability","CPE String","Advisories,Solutions,Tools"]
     dataList = []
     try:
         for i in range(len(detailsList)):

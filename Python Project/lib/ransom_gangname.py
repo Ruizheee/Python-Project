@@ -26,7 +26,10 @@ def get_ransomware_gang():
         get_ransom_groupnames = str(get_ransom_groupnames).replace(words,' ')
     get_ransom_groupnames = get_ransom_groupnames.split(',') #Splitting the entire string into a list based on the ',' delimiter
     for groupnames in get_ransom_groupnames: #Using a for loop to strip all whitespaces in each element and appending it to the ransom_grouplist
-        ransom_grouplist.append(groupnames.strip(' '))
+        if groupnames.strip(' ') == 'Pysa (Mespinoza)':
+            ransom_grouplist.append('Pysa')
+        else:
+            ransom_grouplist.append(groupnames.strip(' '))
     ransom_victimTable = ransom_soup.find('table',attrs={'class':'table table-striped table-bordered table-sm'}) #Finding how many victims there are
     ransom_tableData = ransom_victimTable.findAll('td') #Extracting the data from the table data 
     search_ransomVictimCount = re.findall(r'center;"\>\d+\<\/td>',str(ransom_tableData)) #Using regex to match the number of victims
@@ -49,32 +52,34 @@ def search_Ransomware_gang(group_nameList):
     Each CVE number will then be appended into a list and fed to the next function to find out more details about it
     '''
     headers = {"User_Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"}
-    cve_keyvalueDict = dict()
-    sites_to_ignore = ['akamai','facebook','reddit','twitter','instagram','youtube','ctf','wilsonsmedia','cert.lv','translate']
-    for groupname in group_nameList:
-        cve_number_list = []
-        ransomwareSearchString = 'intitle:"{name}" "ransomware" "cve-" after:2015'.format(name=groupname) 
-        for results in scrapeResults.scrape_URL(ransomwareSearchString,3):
-            for sites in sites_to_ignore:
-                if sites in results:
-                    results = ''
-            try:
-                print(groupname)
-                print(results)
-                ransomware_search_results = requests.get(results, headers=headers)
-                response = ransomware_search_results.content
-                soup = BeautifulSoup(response,'lxml')
-                find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{4,5}",str(soup))
-                for numbers in find_cve_numbers:
-                    if numbers.upper() not in cve_number_list and numbers.upper != None:
-                        cve_number_list.append(numbers.upper())
-                cve_keyvalueDict.update({groupname:cve_number_list})
-                print(cve_keyvalueDict)
-            except:
-                pass
-    return cve_keyvalueDict
+    cve_keyvalueDict = {}
+    sites_removeList = []
+    with open(r'lib//sites.txt','r') as removeFile:
+        for sites_to_remove in removeFile:
+            sites_removeList.append(sites_to_remove.replace('\n',''))
+        for groupname in group_nameList:
+            cve_number_list = []
+            #ransomwareSearchString = 'intitle:"{name}" "ransomware" "cve-" after:2015'.format(name=groupname) 
+            for results in scrapeResults.scrape_URL(groupname,10):
+                for sites in sites_removeList:
+                    if sites in results:
+                        results = ''
+                try:
+                    print(groupname)
+                    print(results)
+                    ransomware_search_results = requests.get(results, headers=headers)
+                    response = ransomware_search_results.content
+                    soup = BeautifulSoup(response,'lxml')
+                    find_cve_numbers = re.findall(r"(?i)cve-\d{4}-\d{4,5}",str(soup))
+                    for numbers in find_cve_numbers:
+                        if int(numbers.split('-')[1]) >= 2015:   
+                            if (numbers.upper() not in cve_number_list and numbers.upper != None):
+                                cve_number_list.append(numbers.upper())
+                        cve_keyvalueDict.update({groupname:cve_number_list})
+                    print(cve_keyvalueDict)
+
+                except:
+                    pass
+        return cve_keyvalueDict
 
 
-
-
-            
